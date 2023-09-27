@@ -3,16 +3,18 @@
 
 
 
-
-
+#region Funcao Verificar Players Proximos
+// Funcao para verificar se o player blue esta proximo
 function scr_palyer_red_checar_player_blue(){
 	if distance_to_object(obj_player_blue) <= dist_atk{
 		estado = scr_player_red_perseguindo;
 	}
 }
+#endregion
 
-
-
+#region Funcao escolher o estado(parando / andando)
+// Funcao princial
+// Palyer escolhe de forma random se ele vai se movimentar ou ficar parado
 function scr_player_red_escolher_estado(){
 	scr_palyer_red_checar_player_blue()
 	
@@ -26,9 +28,10 @@ function scr_player_red_escolher_estado(){
 		estado = scr_player_red_parado;
 	}
 }
+#endregion
 
-
-
+#region Funcao Colosao 
+// Function Colisao
 function scr_player_red_colisao(){
 	//Colisao player parede
 	if place_meeting(x + hveloc, y, obj_left ){
@@ -47,32 +50,27 @@ function scr_player_red_colisao(){
 	}
 	y += vveloc;
 }
+#endregion
 
-
+#region Funcao Andando
 function scr_player_red_andando(){
 	scr_palyer_red_checar_player_blue()
 	
 	image_speed = 1;
-	//if distance_to_point(dest_x, dest_y) > veloc{
 		var _dir = point_direction(x, y, dest_x, dest_y);
 		hveloc = lengthdir_x(veloc, _dir);
 		vveloc = lengthdir_y(veloc, _dir);
-		//x += hveloc;
-		//y += vveloc;
-		scr_player_red_colisao()//Chama o script colisao
-	//}
-	//else{
-		//x = dest_x;
-		//y = dest_y;
-	//}
 }
+#endregion
 
+#region Function Parado
 function scr_player_red_parado(){
 	scr_palyer_red_checar_player_blue()
 	image_speed = 0.5;
 }
+#endregion
 
-
+#region Function Perseguir
 function scr_player_red_perseguindo(){
 	image_speed = 1.5;
 
@@ -89,8 +87,45 @@ function scr_player_red_perseguindo(){
 		estado = scr_player_red_escolher_estado;
 		alarm[0] = irandom_range(120, 240);
 	}
+}
+#endregion
+
+#region Function Atirar
+// Funcao para criar os tiros  do player
+function scr_player_red_atirando(){
+	// Shooting
+	// Codigo que gera os tiros 
+	if municao >= 10{
+		if (mouse_check_button(mb_left)) && (cooldown < 1){
+			municao -= 10;//controla a municao
+			alarm[1] = 180;
+		    instance_create_layer(x, y, "BulletsLayer", obj_bullet);
+		    cooldown = 10;
+		}
+		// Subtrai 1 da variável "cooldown" de cada quadro do jogo,
+		cooldown = cooldown - 1;
+	}
 
 }
+
+
+function scr_player_red_municao(){
+	// Controla a municao
+	if alarm[1] <= 0{
+		municao += 1;
+	}
+	municao = clamp(municao, 0, max_municao);
+}
+
+#endregion
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-/// @description Municao Player
+/// @description Municao e Dash
 // You can write your code in this editor
 
 //draw_text(x+30, y+50, "municao");

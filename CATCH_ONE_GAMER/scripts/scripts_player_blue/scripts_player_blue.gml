@@ -1,9 +1,8 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-
+#region Function Movimento
 function scr_player_blue_andando(){
-	
 // Girar o Player para ficar sempre de frente para o mouse
 image_angle = point_direction(x, y, mouse_x, mouse_y);
 
@@ -12,19 +11,14 @@ image_angle = point_direction(x, y, mouse_x, mouse_y);
 	cima = keyboard_check(ord("W"));
 	esquerda = keyboard_check(ord("A"));
 	baixo = keyboard_check(ord("S"));
-	// Codigo Colisao
-	//hveloc = (direita - esquerda) * veloc;
-	//x += hveloc;
-	//vveloc = (baixo - cima) * veloc;
-	//y += vveloc;
-	
-
 }
+#endregion
 
-// Funcao Colisao com as paredes
+#region Function Colisao
+// Funcao Colisao do player
 function scr_player_blue_colisao(){
 	hveloc = (direita - esquerda) * veloc;
-	//Colisao player parede
+	//Colisao player 
 	if place_meeting(x + hveloc, y, obj_left ){
 		while !place_meeting(x + sign(hveloc), y, obj_left ){
 		x += sign(hveloc);
@@ -34,7 +28,7 @@ function scr_player_blue_colisao(){
 	x += hveloc;
 
 	vveloc = (baixo - cima) * veloc;
-	//Colisao player parede
+	//Colisao player
 	if place_meeting(x, y  +vveloc, obj_left ){
 		while !place_meeting(x, y + sign(hveloc), obj_left ){
 		y += sign(vveloc);
@@ -43,9 +37,12 @@ function scr_player_blue_colisao(){
 	}
 	y += vveloc;
 }
+#endregion
 
-
-// Funcao para chamar o Dash
+#region Dash(SuperVelocidade)
+// ------Inicio Dash-------
+// Fuções relacionadas ao Dash(Super Velocidade)
+// Funcao para chamar o Dash(Quando clicar o mouse e chamada a função criar dash)
 function scr_player_blue_ativa_dash(){
 	// Codigo que puxa a acao da function Dash
 	if mouse_check_button_pressed(mb_right){
@@ -59,9 +56,10 @@ function scr_player_blue_ativa_dash(){
 function scr_player_blue_dash(){
 	hveloc = lengthdir_x(dash_veloc, dash_dir);
 	vveloc = lengthdir_y(dash_veloc, dash_dir);
-	x += hveloc;
-	y += vveloc;
-	
+	//x += hveloc;
+	//y += vveloc;
+	scr_player_blue_colisao();
+
 	// Cria o objeto dash (velocidade do player)
 	var _inst = instance_create_layer(x, y, "Instances", obj_dash);
 	_inst.sprite_index = sprite_index;
@@ -75,15 +73,12 @@ function scr_player_blue_qtd_dash(){
 		qtd_dash += 1;
 	}
 	qtd_dash = clamp(qtd_dash, 0, max_qtd_dash);
-
-
 }
+// ------Final Dash-------
 
+#endregion
 
-
-
-
-
+#region Function Tiros e Municao
 
 // Funcao para criar os tiros  do player
 function scr_player_blue_atirando(){
@@ -108,3 +103,13 @@ function scr_player_blue_municao(){
 	}
 	municao = clamp(municao, 0, max_municao);
 }
+#endregion
+
+
+
+
+
+
+
+
+

@@ -15,10 +15,6 @@ veloc = 2;
 dir = 0;
 
 
-// Dash
-// Configurações do modeo Dash
-dash_dir = -1;
-dash_veloc = 6;
 
 
 // Estado
@@ -39,6 +35,17 @@ estado6 = scr_player_blue_colisao;
 max_municao = 100;
 municao = max_municao;
 
+// Diminuir um pouco a cadência de tiro
+cooldown = 0;
+
+
+
+
+// Dash
+// Configurações do modeo Dash
+dash_dir = -1;
+dash_veloc = 6;
+
 
 // qtd_dash
 // Codigo para controlar a qtd_dash Player (estamina)
@@ -47,13 +54,17 @@ qtd_dash = max_qtd_dash;
 
 
 
+// Ataque Inimigo
+
+max_vida = 20;
+vida = max_vida;
+
+tomar_dano = true;
+empurrar_dir = 0;
 
 
 
 
 
 
-
-// Diminuir um pouco a cadência de tiro
-cooldown = 0;
 
